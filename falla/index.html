@@ -1,0 +1,61 @@
+<body></body>
+<script src="/lib/three.js"></script>
+<script>
+  // The "scene" is where stuff in our game will happen:
+  var scene = new THREE.Scene();
+  var flat = {flatShading: true};
+  var light = new THREE.AmbientLight('white', 0.8);
+  scene.add(light);
+
+  // The "camera" is what sees the stuff:
+  var aspectRatio = window.innerWidth / window.innerHeight;
+  var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
+  camera.position.z = 500;
+  scene.add(camera);
+
+  // The "renderer" draws what the camera sees onto the screen:
+  var renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  // ******** START CODING ON THE NEXT LINE ********
+var base= new THREE.PlaneGeometry(100,100);
+var flat = new THREE.MeshNormalMaterial(flat);
+var base_flat = new THREE.Mesh(base,flat);
+var lado1_flat = new THREE.Mesh(base,flat);
+var lado2_flat = new THREE.Mesh(base,flat);
+var lado3_flat = new THREE.Mesh(base,flat);
+var lado4_flat = new THREE.Mesh(base,flat);
+var lado5_flat = new THREE.Mesh(base,flat);
+
+scene.add(base_flat);
+scene.add(lado1_flat);
+scene.add(lado2_flat);
+scene.add(lado3_flat);
+scene.add(lado4_flat);
+scene.add(lado5_flat);
+
+var r90 = 90*Math.PI/180;
+base_flat.rotation.set(-r90,0,0);
+
+lado1_flat.position.set(0,50,-50);
+
+lado2_flat.position.set(-50,50,0);
+lado2_flat.rotation.set(0,r90,0);
+
+lado3_flat.position.set(50,50,0);
+lado3_flat.rotation.set(0,r90,0);
+lado4_flat.position.set(0,50,50);
+lado4_flat.rotation.set(0,0,r90);
+
+lado5_flat.rotation.set(-r90,0,0);
+lado5_flat.position.set(0,100,30);
+
+camera.position.set(100,400,200);
+camera.lookAt(base_flat.position);
+
+
+
+  // Now, show what the camera sees on the screen:
+  renderer.render(scene, camera);
+</script>
