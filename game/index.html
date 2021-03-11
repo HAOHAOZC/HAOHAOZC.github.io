@@ -19,21 +19,32 @@
   document.body.appendChild(renderer.domElement);
 
   // ******** START CODING ON THE NEXT LINE ********
+
+// cuerpo
 var body= new THREE.SphereGeometry(100);
 var cover= new THREE.MeshNormalMaterial(flat);
 var avatar = new THREE.Mesh (body, cover);
 scene.add(avatar);
-    
+//manos    
 var hand= new THREE.SphereGeometry(50);
 var rightHand= new THREE.MeshNormalMaterial(flat);
 var rightHand= new THREE.Mesh (hand, rightHand);
 rightHand.position.set(-150,0,0);
 scene.add(rightHand);
     
-var hand= new THREE.SphereGeometry(50);
 var leftHand= new THREE.MeshNormalMaterial(flat);
+var leftHand= new THREE.Mesh (hand, leftHand);
 leftHand.position.set(150,0,0);
 scene.add(leftHand);
+//pie
+var foot= new THREE.SphereGeometry(50);
+var rightFoot= new THREE.Mesh (foot, cover);
+rightFoot.position.set(-75,-125,0);
+scene.add(rightFoot);
+    
+var leftFoot= new THREE.Mesh (foot, cover);
+leftFoot.position.set(75,-125,0);
+scene.add(leftFoot);
 
 
 
