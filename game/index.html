@@ -64,6 +64,28 @@ function animate() {
 
 animate();
 
+function MakeTreeAt(x,z) { 
+    var tronco= new THREE.Mesh(
+    new THREE.CylinderGeometry(50,50,200),
+    new THREE.MeshBasicMaterial({color:'sienna'})
+    );
+    var copa = new THREE.Mesh(
+    new THREE.SphereGeometry(150),
+    new THREE.MeshBasicMaterial({color: 'forestgreen'})
+    );
+    
+    tronco.position.set(x,-75,z);
+    scene.add(tronco);
+
+    copa.position.y = 175;
+    tronco.add(copa)
+    }
+    
+    makeMakeTreeAt(500,0);
+    makeMakeTreeAt(-500,0);
+    makeMakeTreeAt(750,-1000);
+    makeMakeTreeAt(-750,-1000);
+    
 document.addEventListener('keydown', gestionartecla);
 function gestionartecla (evento){
     var codigo = evento.code;
