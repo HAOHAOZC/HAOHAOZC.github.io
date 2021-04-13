@@ -64,27 +64,41 @@ function animate() {
 
 animate();
 
-function MakeTreeAt(x,z) { 
-    var tronco= new THREE.Mesh(
-    new THREE.CylinderGeometry(50,50,200),
-    new THREE.MeshBasicMaterial({color:'sienna'})
-    );
-    var copa = new THREE.Mesh(
-    new THREE.SphereGeometry(150),
-    new THREE.MeshBasicMaterial({color: 'forestgreen'})
-    );
+function CrearArbol(x,z) { 
+    var tronco = new THREE.CylinderGeometry(50,50,200);
+    var marron = new THREE.MeshBasicMaterial({color:'sienna'});
+    var tronco_marron= new THREE.Mesh(tronco, marron);
     
-    tronco.position.set(x,-75,z);
-    scene.add(tronco);
+    var copa = new THREE.SphereGeometry(150);
+    var verde = new THREE.MeshBasicMaterial({color: 'forestgreen'});
+    var copa_verde = new THREE.Mesh(copa, verde)
+    
+    tronco_marron.position.set(x,-75,z);
+    
 
-    copa.position.y = 175;
-    tronco.add(copa)
-    }
+    copa_verde.position.y = 175;
+    tronco_marron.add(copa_verde);
+    scene.add(tronco_marron);
+}
+
+CrearArbol(0,0);
+   
+var minimo_x= -4000;
+var maximo_x= 4000;
+var maximo_z= 4000;
+var minimio_z= -4000;
+var distanciaArbol= 800;
     
-    makeMakeTreeAt(500,0);
-    makeMakeTreeAt(-500,0);
-    makeMakeTreeAt(750,-1000);
-    makeMakeTreeAt(-750,-1000);
+for(var x= minimo_x; x<= maximo_x; x= x+400){
+    for(var z=minimio_z; z<=maximo_z; z= z+400){
+        CrearArbol(x,z)
+    ;}
+;}
+
+camera.lookAt(avatar.position);
+scene.add(camera);
+
+    
     
 document.addEventListener('keydown', gestionartecla);
 function gestionartecla (evento){
