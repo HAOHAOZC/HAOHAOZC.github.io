@@ -10,7 +10,8 @@
   // The "camera" is what sees the stuff:
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
-  camera.position.z = 500;
+  camera.position.z = 6000;
+  camera.position.y= 3000;  
   scene.add(camera);
 
   // The "renderer" draws what the camera sees onto the screen:
@@ -83,6 +84,7 @@ function CrearArbol(x,z) {
 
 CrearArbol(0,0);
    
+
 var minimo_x= -4000;
 var maximo_x= 4000;
 var maximo_z= 4000;
