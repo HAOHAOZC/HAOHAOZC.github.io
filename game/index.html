@@ -61,9 +61,13 @@ function animate() {
 }
 animate();
 
+var girar = true;
+    
 function animate() {
     requestAnimationFrame(animate);
-    avatar.rotation.z = avatar.rotation.z + 0.05;
+    if (girar) {
+      avatar.rotation.z = avatar.rotation.z + 0.05;
+    }
     renderer.render(scene, camera);
 }
 
@@ -98,17 +102,20 @@ var distanciaArbol= 800;
 for(var x= minimo_x; x<= maximo_x; x= x+400){
     for(var z=minimio_z; z<=maximo_z; z= z+400){
         CrearArbol(x,z)
-    ;}
-;}
+    }
+}
 
 
 document.addEventListener('keydown', gestionartecla);
 function gestionartecla (evento){
     var codigo = evento.code;
-    if (codigo == 'ArrowLeft') marcador.position.x= marcador.position.x-10;
-    if (codigo == 'ArrowRight') marcador.position.x= marcador.position.x+10;
+    if (codigo == 'ArrowLeft') marcador.rotation.y= marcador.position.y-1;
+    if (codigo == 'ArrowRight') marcador.rotation.y= marcador.position.y+1;
     if (codigo == 'ArrowUp') marcador.position.z= marcador.position.z+10;
     if (codigo == 'ArrowDown') marcador.position.z= marcador.position.z-10;
+    if (codigo == 'Space') {
+        girar=!girar;
+    }
 }
   // Now, show what the camera sees on the screen:
   renderer.render(scene, camera);
