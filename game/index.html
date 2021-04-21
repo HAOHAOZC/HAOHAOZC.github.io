@@ -10,8 +10,8 @@
   // The "camera" is what sees the stuff:
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
-  camera.position.z = 6000;
-  camera.position.y= 3000;  
+  camera.position.z = 250;
+  camera.position.y= 0;  
   scene.add(camera);
 
   // The "renderer" draws what the camera sees onto the screen:
@@ -20,12 +20,16 @@
   document.body.appendChild(renderer.domElement);
 
   // ******** START CODING ON THE NEXT LINE ********
+// marcador
+var marcador = new THREE.Object3D();
+scene.add(marcador)
 
 // cuerpo
 var body= new THREE.SphereGeometry(100);
 var cover= new THREE.MeshNormalMaterial(flat);
 var avatar = new THREE.Mesh (body, cover);
-scene.add(avatar);
+marcador.add(avatar);
+marcador.add(camera);
 //manos    
 var hand= new THREE.SphereGeometry(50);
 var rightHand= new THREE.MeshNormalMaterial(flat);
@@ -97,18 +101,14 @@ for(var x= minimo_x; x<= maximo_x; x= x+400){
     ;}
 ;}
 
-camera.lookAt(avatar.position);
-scene.add(camera);
 
-    
-    
 document.addEventListener('keydown', gestionartecla);
 function gestionartecla (evento){
     var codigo = evento.code;
-    if (codigo == 'ArrowLeft') avatar.position.x= avatar.position.x-10;
-    if (codigo == 'ArrowRight') avatar.position.x= avatar.position.x+10;
-    if (codigo == 'ArrowUp') avatar.position.z= avatar.position.z+10;
-    if (codigo == 'ArrowDown') avatar.position.z= avatar.position.z-10;
+    if (codigo == 'ArrowLeft') marcador.position.x= marcador.position.x-10;
+    if (codigo == 'ArrowRight') marcador.position.x= marcador.position.x+10;
+    if (codigo == 'ArrowUp') marcador.position.z= marcador.position.z+10;
+    if (codigo == 'ArrowDown') marcador.position.z= marcador.position.z-10;
 }
   // Now, show what the camera sees on the screen:
   renderer.render(scene, camera);
