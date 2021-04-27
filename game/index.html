@@ -100,23 +100,35 @@ var minimio_z= -4000;
 var distanciaArbol= 800;
     
 for(var x= minimo_x; x<= maximo_x; x= x+400){
-    for(var z=minimio_z; z<=maximo_z; z= z+400){
+    for(var z=minimio_z; z<=maximo_z; z= z+1000){
         CrearArbol(x,z)
     }
 }
 
 
 document.addEventListener('keydown', gestionartecla);
-function gestionartecla (evento){
+function gestionartecla(evento){
     var codigo = evento.code;
-    if (codigo == 'ArrowLeft') marcador.rotation.y= marcador.position.y-1;
-    if (codigo == 'ArrowRight') marcador.rotation.y= marcador.position.y+1;
-    if (codigo == 'ArrowUp') marcador.position.z= marcador.position.z+10;
-    if (codigo == 'ArrowDown') marcador.position.z= marcador.position.z-10;
+    if (codigo == 'ArrowLeft') marcador.rotation.y +=0.01;
+    if (codigo == 'ArrowRight') marcador.rotation.y -=0.01;
+    if (codigo == 'ArrowUp')   avanzar(marcador, marcador.rotation.y,false);
+    if (codigo == 'ArrowDown') avanzar(marcador, marcador.rotation.y,true);
     if (codigo == 'Space') {
         girar=!girar;
     }
 }
+function avanzar(objeto,radianes, atras=false){
+    if (atras){ radianes = radianes + Math.PI};
+    var grado =(180*radianes/Math.PI);
+    
+    console.log("Grados:"+ grado);
+    console.log("X:"+ objeto.position.x);
+    console.log("Z:"+ objeto.position.z);
+    console.log("cos(radianes):"+ Math.cos(radianes));
+    console.log("sin(radianes):"+ Math.sin(radianes));
+    
+    objeto.position.x += -20*Math.sin(radianes);
+    objeto.position.z += -20*Math.cos(radianes);
+}
   // Now, show what the camera sees on the screen:
-  renderer.render(scene, camera);
 </script>
