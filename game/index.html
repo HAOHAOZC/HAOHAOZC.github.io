@@ -109,8 +109,8 @@ for(var x= minimo_x; x<= maximo_x; x= x+400){
 document.addEventListener('keydown', gestionartecla);
 function gestionartecla(evento){
     var codigo = evento.code;
-    if (codigo == 'ArrowLeft') marcador.rotation.y +=0.01;
-    if (codigo == 'ArrowRight') marcador.rotation.y -=0.01;
+    if (codigo == 'ArrowLeft') marcador.rotation.y +=0.05;
+    if (codigo == 'ArrowRight') marcador.rotation.y -=0.05;
     if (codigo == 'ArrowUp')   avanzar(marcador, marcador.rotation.y,false);
     if (codigo == 'ArrowDown') avanzar(marcador, marcador.rotation.y,true);
     if (codigo == 'Space') {
@@ -129,6 +129,19 @@ function avanzar(objeto,radianes, atras=false){
     
     objeto.position.x += -20*Math.sin(radianes);
     objeto.position.z += -20*Math.cos(radianes);
+    
+    // Comprobar si estamos colisionamos
+    if (hayColision()){
+        // Si colisionamos deshacemos el paso
+        objeto.position.x -= -20*Math.sin(radianes);
+        objeto.position.z -= -20*Math.cos(radianes);
+    }
 }
+
+function hayColision(){
+    return false;
+}
+
+
   // Now, show what the camera sees on the screen:
 </script>
