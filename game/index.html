@@ -151,6 +151,9 @@ function avanzar(objeto,radianes, atras=false){
 }
 
 function hayColision(){
+    var vector = new THREE.Vector3(0,-1,0);
+    var raycaster= new 
+    THREE.Raycaster(marcador.position,vector)
     return false;
 }
 
