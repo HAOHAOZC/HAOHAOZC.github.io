@@ -10,7 +10,7 @@
   // The "camera" is what sees the stuff:
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
-  camera.position.z = 250;
+  camera.position.z = 300;
   camera.position.y= 0;  
   scene.add(camera);
 
@@ -72,7 +72,9 @@ function animate() {
 }
 
 animate();
-
+//Lista de objetos que no podemos atravesar
+var noPermitido=[]
+    
 function CrearArbol(x,z) { 
     var tronco = new THREE.CylinderGeometry(50,50,200);
     var marron = new THREE.MeshBasicMaterial({color:'sienna'});
@@ -88,6 +90,16 @@ function CrearArbol(x,z) {
     copa_verde.position.y = 175;
     tronco_marron.add(copa_verde);
     scene.add(tronco_marron);
+    
+    //Añadir circulo de control del limite
+    var circulo = new THREE.CircleGeometry(300);
+    var circulo_t = new THREE.MeshNormalMaterial();
+    var limite = new THREE.Mesh(circulo, circulo_t);
+    
+    limite.position.y=-100;
+    limite.rotation.x= -Math.PI/2;
+    tronco_marron.add(limite);
+    noPermitido.push(limite);
 }
 
 CrearArbol(0,0);
@@ -97,9 +109,9 @@ var minimo_x= -4000;
 var maximo_x= 4000;
 var maximo_z= 4000;
 var minimio_z= -4000;
-var distanciaArbol= 800;
+var distanciaArbol= 1000;
     
-for(var x= minimo_x; x<= maximo_x; x= x+400){
+for(var x= minimo_x; x<= maximo_x; x= x+distanciaArbol){
     for(var z=minimio_z; z<=maximo_z; z= z+1000){
         CrearArbol(x,z)
     }
