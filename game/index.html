@@ -124,7 +124,6 @@ for(var x= minimo_x; x<= maximo_x; x= x+distanciaArbol){
 document.addEventListener('keydown', gestionartecla);
 function gestionartecla(evento){
     var codigo = evento.code;
-    if (codigo == 'KeysR') marcador.rotation.z =0;
     if (codigo == 'ArrowLeft') marcador.rotation.y +=0.05;
     if (codigo == 'ArrowRight') marcador.rotation.y -=0.05;
     if (codigo == 'ArrowUp')   avanzar(marcador, marcador.rotation.y,false);
