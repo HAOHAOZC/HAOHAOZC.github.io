@@ -153,14 +153,7 @@ function avanzar(objeto,radianes, atras=false){
     }
 }
 
-function hayColision(){
-    var vector = new THREE.Vector3(0,-1,0);
-    var raycaster= new THREE.Raycaster(marcador.position,vector);
-    var colisonados = raycaster.intersectObjects(noPermitido);
-    if (colisonados.length > 0) return true;
-    
-    return false;
-}
+
 
 
   // Now, show what the camera sees on the screen:
