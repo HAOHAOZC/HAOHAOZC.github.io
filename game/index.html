@@ -1,5 +1,7 @@
 <body></body>
 <script src="/lib/three.js"></script>
+<script src="/lib/Scoreboard.js"></script>
+<script src="/lib/tween.umd.js"></script>
 <script>
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
@@ -20,6 +22,21 @@
   document.body.appendChild(renderer.domElement);
 
   // ******** START CODING ON THE NEXT LINE ********
+//contador
+var contador= new Scoreboard();
+contador.countdown(45);
+contador.score();
+contador.help(
+'Arrow keys to move' +
+'Enter bar to jump for fruit' +
+'Watch for shaking trees with fruit' +
+'Get near the trees and jump before the fuit is gone!'
+);
+contador.onTimeExpired(timeExpired);
+function timeExpired(){
+    contador.message("Game Over!");
+}
+    
 // marcador
 var marcador = new THREE.Object3D();
 scene.add(marcador)
@@ -76,7 +93,11 @@ function animate() {
 
 animate();
 //Lista de objetos que no podemos atravesar
-var noPermitido=[]
+var noPermitido=[];
+// Lista fruta
+var treeTops=[];
+treeTops.push(top);
+    
     
 function CrearArbol(x,z) { 
     var tronco = new THREE.CylinderGeometry(50,50,200);
@@ -120,7 +141,19 @@ for(var x= minimo_x; x<= maximo_x; x= x+distanciaArbol){
     }
 }
 
-
+//tesoro
+var treasureTreeNumber;
+function updateTreasure(){
+    var rand = Math.random()*treeTops.length;
+    treasureTreeNumber=Math.floor(rand);
+}
+function shakeTreasureTree(){
+    updateTreasureTreeNumber();
+    var tween = new TWEEN({shake:0});
+    tween.to({shake:20*2*Math.PI}, 8*1000);
+    
+}
+    
 document.addEventListener('keydown', gestionartecla);
 function gestionartecla(evento){
     var codigo = evento.code;
