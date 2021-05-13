@@ -27,10 +27,10 @@ var contador= new Scoreboard();
 contador.countdown(45);
 contador.score();
 contador.help(
-'Arrow keys to move' +
-'Enter bar to jump for fruit' +
-'Watch for shaking trees with fruit' +
-'Get near the trees and jump before the fuit is gone!'
+'Usa los cursores para mover' +
+'Busca las frutas en los árboles' +
+'Aprieta Enter para coger las frutas' +
+'Acércate al árbol y coge las frutas antes de que desaparezcan!'
 );
 contador.onTimeExpired(timeExpired);
 function timeExpired(){
@@ -71,6 +71,7 @@ avatar.add(leftFoot);
 //marcador posicion
 marcador.position.x= 500;
     
+
 var isCartwheeling = false;
 function animate() {
     requestAnimationFrame(animate);
@@ -143,16 +144,33 @@ for(var x= minimo_x; x<= maximo_x; x= x+distanciaArbol){
 
 //tesoro
 var treasureTreeNumber;
-function updateTreasure(){
+function updateTreasureTreeNumber(){
     var rand = Math.random()*treeTops.length;
     treasureTreeNumber=Math.floor(rand);
 }
+ 
 function shakeTreasureTree(){
     updateTreasureTreeNumber();
-    var tween = new TWEEN({shake:0});
+    var tween = new TWEEN.Tween({shake:0});
     tween.to({shake:20*2*Math.PI}, 8*1000);
-    
+    tween.onUpdate(shakeTreeUpdate);
+    tween.onComplete(shakeTreeComplete);
+    tween.start();
 }
+
+function shakeTreeUpdate(update){
+    var top = treeTops[treasureTreeNumber];
+    top.position.x=50*Math.sin(update.shake);
+}
+
+function shakeTreeComplete(){
+    var top =treeTops[treasureTreeNumber];
+    top.position.x=0;
+    setTimeout(shakeTreasureTree,2*1000);
+}
+
+shakeTreasureTree();
+    
     
 document.addEventListener('keydown', gestionartecla);
 function gestionartecla(evento){
@@ -164,6 +182,7 @@ function gestionartecla(evento){
     if (codigo == 'Space') {
         girar=!girar;
     }
+    if (codigo == 'Enter') jump();
 }
 function avanzar(objeto,radianes, atras=false){
     if (atras){ radianes = radianes + Math.PI};
@@ -195,6 +214,72 @@ function hayColision(){
     return false;
 }
 
+//Saltar
+function jump(){
+    if (avatar.position.y>0) return;
+    checkForTreasure()
+    animateJump();
+}
+    
+    
+function checkForTreasure(){
+    var top= treeTops[treasureTreeNumber];
+    var tree= top.parent;
+    var p1= tree.position;
+    var p2= marcador.position;
+    var xDiff= p1.x - p2.x;
+    var zDiff= p1.z - p2.z;
+    
+    var distance = Math.sqrt(xDiff*xDiff + zDiff*zDiff);
+    if (distance<500) scorePoints();
+}
+ 
+//conatdor     
+function scorePoint(){
+    if (contador.getTimeRemaining()==0) return;
+    contador.addPoints(10);
+    aniamteFruit();
+}
+    
+function animateJump(){
+    var tween= new TWEEN.Tween({jump:0});
+    tween.to({jump:Math.PI}, 400);
+    tween.onUpdate(animateJumpUpdate);
+    tween.onComplete(animateJumpComplete);
+    tween.start();
+}
 
+function animateJumpUpdate(update){
+    avatar.position.y=100*Math.sin(update.jump);
+}
+    
+function animateJumpComplete(){
+    avatar.position.y=0;
+}
+    
+var fruit;
+function animateFruit() {
+    if (fruit) return;
+    fruit= THREE.Mesh(
+    new THREE.CylinderGeometry(25,25,5,25),
+    new THREE.MeshBasicMaterial({color:'gold'})
+    );
+    marcador.add(fruit);
+    var tween= new THREE.Tween({height:200, spin:0});
+    tween.to({height:350, spin:2*Math.PI},500);
+    tween.onUpdate(animateFruitUpdate);
+    tween.onComplete(animateFruitComplete);
+    tween.start();
+}
+    
+function animateFruitUpdate(){
+    fruit.position.y=update.height;
+    fruit.rotation.x=update.spin;
+}    
+function animateFruitComplete(){
+    marcador.remove(fruit);
+    fruit=underfined;
+}
   // Now, show what the camera sees on the screen:
 </script>
+
